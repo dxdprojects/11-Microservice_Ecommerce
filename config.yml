@@ -13,8 +13,8 @@ spec:
         app: emailservice
     spec:
       containers:
-      - name: gcr.io/google-samples/microservices-demo/emailservice:v0.8.0
-        image: nginx:1.14.2
+      - name: emailservice
+        image: gcr.io/google-samples/microservices-demo/emailservice:v0.8.0
         ports:
         - containerPort: 8080
         env:
@@ -131,7 +131,7 @@ spec:
         - containerPort: 50051
         env:
         - name: PORT
-          value: currencyservice
+          value: "50051"
         - name: DISABLE_PROFILER
           value: "1"
 ---
@@ -170,6 +170,8 @@ spec:
         env:
         - name: PORT
           value: "7000"
+        - name: DISABLE_PROFILER
+          value: "1"
 ---
 apiVersion: v1
 kind: Service
@@ -403,6 +405,8 @@ spec:
         env:
         - name: PORT
           value: "8080"
+        - name: PRODUCT_CATALOG_SERVICE_ADDR
+          value: "productcatalogservice:3550"
         - name: SHIPPING_SERVICE_ADDR
           value: "shippingservice:50051"
         - name: CURRENCY_SERVICE_ADDR
@@ -427,5 +431,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
       nodePort: 30007
